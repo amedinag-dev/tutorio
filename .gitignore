@@ -218,3 +218,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Tutorio: datos generados por cada usuario (no se versionan)
+/topics/
+/progress/
+
+# Tutorio: rutas de cada curso (las añade el leader al dar de alta un curso)
