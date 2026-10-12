@@ -46,7 +46,7 @@ Entrega tus respuestas en [`answers/`](answers/).
 [exercises/nivel_3/README.md](exercises/nivel_3/README.md)
 
 ## Test de repaso
-[quiz.md](quiz.md) — responde en `answers/quiz.md` (formato `1: b`).
+[quiz.md](quiz.md) — marca con `[X]` una opción por pregunta en [`answers/quiz.md`](answers/quiz.md).
 
 ## Fuentes
 - [S1] <título> — ver [research/sources.md](../research/sources.md)

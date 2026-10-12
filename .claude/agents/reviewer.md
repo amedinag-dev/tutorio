@@ -14,7 +14,8 @@ de sesión y no hables con el usuario; devuelve tu resultado al leader.
 2. Lee las respuestas del usuario (`answers/`, `diagnostic/answers.md` o
    `final/answers/`), el enunciado y su clave en `topics/<slug>/.keys/`.
 3. Corrige solo con evidencia:
-   - Tipo test: compara con la clave.
+   - Tipo test: lee la casilla marcada con `[X]` (o `[x]`) en cada pregunta y compárala
+     con la clave; varias marcas, ninguna o "No lo sé" cuentan como fallo (§10.4).
    - Código: ejecuta con `Bash` el comando de tests indicado en el enunciado contra
      `answers/nivel_N/`. Registra el comando y el resumen de la salida.
    - Labs: comprueba cada criterio de éxito; si no puedes ejecutarlo, usa la evidencia

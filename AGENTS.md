@@ -124,7 +124,7 @@ verificables; nada se inventa.
 | `.gitignore` (rutas de cada curso) | leader | todos |
 | `topics/<slug>/research/` | researcher | teacher, reviewer, leader |
 | `topics/<slug>/README.md`, lecciones, ejercicios, quiz, `final/` (enunciados), `diagnostic/test.md`, `.keys/` | teacher | todos |
-| `topics/<slug>/**/answers/`, `diagnostic/answers.md` | usuario (o leader transcribiendo) | reviewer |
+| `topics/<slug>/**/answers/`, `diagnostic/answers.md` | usuario (o leader transcribiendo); el teacher solo crea la copia vacía de cada test (§10.4) | reviewer |
 | `progress/<slug>/` | reviewer | leader, teacher |
 
 ## 5. Metodología: cursos por días
@@ -361,8 +361,15 @@ errores comunes, estado actual.
   (comandos y salida esperada). Si no encaja en el entorno del perfil:
   `⏳ Pendiente de entorno — necesita: … — coste: sí/no/estimado` y, si existe, la
   alternativa local.
-- `quiz.md`: 5–10 preguntas numeradas, opciones `a)`–`d)`, una correcta, sin
-  soluciones en el fichero. El usuario responde en `answers/quiz.md` como `1: b`.
+- **Formato de todos los tests** (diagnóstico, `quiz.md` y examen final tipo test):
+  preguntas numeradas; cada opción como casilla `- [ ] a) …` (`a)`–`d)`, una
+  correcta) más una última opción `- [ ] No lo sé`; sin soluciones en el fichero.
+  `quiz.md` tiene 5–10 preguntas.
+- **Respuestas de un test**: el teacher crea junto al enunciado una copia con todas
+  las casillas vacías (`answers/quiz.md`, `diagnostic/answers.md`…) y el usuario marca
+  `[X]` en una opción por pregunta, sin tocar el enunciado. Varias marcas, ninguna o
+  "No lo sé" cuentan como fallo. Si el usuario responde en el chat (`1: b`), el leader
+  marca las casillas en la copia.
 
 ### 10.5 Claves (`.keys/`)
 

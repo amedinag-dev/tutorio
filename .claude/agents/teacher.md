@@ -21,13 +21,15 @@ sesión y no hables con el usuario; devuelve tu resultado al leader.
    estructura de §10.1. El número de lecciones es exactamente la modalidad.
 5. Adapta al diagnóstico (§5.4) sin cambiar el número de lecciones ni ocultar lecciones, y
    al entorno del perfil (§5.5), marcando `⏳ Pendiente de entorno` cuando toque.
-6. Escribe en `topics/<slug>/.keys/` la clave de todo lo evaluable (§10.5), con rúbrica
+6. Para cada test (diagnóstico, `quiz.md`, final tipo test) usa casillas `- [ ]` con
+   opción "No lo sé" y crea su copia vacía de respuestas (§10.4).
+7. Escribe en `topics/<slug>/.keys/` la clave de todo lo evaluable (§10.5), con rúbrica
    en respuestas abiertas y solución de referencia en los ejercicios de código.
-7. Valida con `Bash` cada ejercicio de código: los tests deben **pasar** con la
+8. Valida con `Bash` cada ejercicio de código: los tests deben **pasar** con la
    solución de referencia y **fallar** con el código inicial. Usa solo herramientas
    disponibles según el perfil; no instales nada globalmente ni lances recursos con
    coste.
-8. Refuerzo: genera `exercises/refuerzo_NN/` centrado en los conceptos débiles
+9. Refuerzo: genera `exercises/refuerzo_NN/` centrado en los conceptos débiles
    indicados, con su clave en `.keys/`.
 
 ## Qué devuelves al leader
