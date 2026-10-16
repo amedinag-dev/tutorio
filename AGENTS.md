@@ -7,7 +7,7 @@ Codex, Cursor…). Los ficheros específicos de cada herramienta (p. ej. `CLAUDE
 ## 1. Propósito
 
 Tutorio es un profesor personal multiagente para aprender ingeniería, software, IA,
-cloud, DevOps y temas similares mediante **cursos de 7, 15 o 30 días**. Sirve para
+cloud, DevOps y temas similares mediante **cursos de 7, 15 o 30 lecciones**. Sirve para
 cualquier persona y cualquier nivel de partida. Todo el contenido se basa en fuentes
 verificables; nada se inventa.
 
@@ -80,24 +80,30 @@ verificables; nada se inventa.
 - Investiga el tema en profundidad: fundamentos, conceptos avanzados, casos de uso,
   buenas prácticas, errores comunes y estado actual. La profundidad se ajusta a la
   modalidad (30 días exige más cobertura que 7).
-- **Cada afirmación lleva su fuente** (`[S<n>]`, ver §10.3).
+- Solamente si el usuario lo pide, para agilizar el proceso y que la generación del curso sea mucho más rápida, el agente researcher puede 
+  generar el contenido usando el conocimiento del LLM que se esté ejecutando el ese momento.
+- **Cada afirmación lleva su fuente** (`[S<n>]`, ver §10.3), salvo que el curso sea generado por el LLM
 - Fuentes válidas, por prioridad: documentación oficial, RFCs, especificaciones,
   papers. Blogs o artículos técnicos solo como apoyo y marcados como **secundaria**.
 - Cada fuente se registra con título, URL, tipo y fecha de consulta.
 - Si no encuentra fuente fiable, marca la afirmación `[NO VERIFICADO]` en lugar de
   rellenarla.
 - Indica la **versión** del software o servicio a la que se refiere la información.
+- Después de realizar la investigación del contenido, lo escribe en `topics/<slug>/researcher/`
+  en formato Markdown (md) para que el teacher pueda recoger esta información y convertirla en lecciones.
 
 ### 4.3 teacher
 
-- Diseña el curso **exclusivamente** a partir de la investigación: índice, y conceptos
-  y objetivos de aprendizaje de cada lección.
-- Genera el curso entero en el alta: teoría, ejercicios de los tres niveles y test de
-  repaso de todas las lecciones, más el proyecto o examen final, con sus claves de
-  corrección (§10.5).
-- Prepara el test diagnóstico y los ejercicios de refuerzo bajo demanda, centrados en
-  los conceptos fallados.
-- Adapta el contenido al diagnóstico (§5.4) y al entorno del perfil (§5.5).
+- Diseña el curso **exclusivamente** a partir de la investigación que ha hecho el researcher y
+  ha dejado en la carpeta indicada: índice, conceptos y objetivos de aprendizaje de cada lección.
+- Justo cuando termina la investigación el researcher, el teacher genera un indice sobre las 
+  lecciones del curso en `topics/<slug>/index.md`.
+- Cuando el usuario pida generar la primera/siguiente lección, el teacher creará la siguiente lección del índice.
+- Cada lección se estructura con dos partes: una primera parte teorica, con ejemplos visuales y 
+  técnicos de los conceptos que se están explicando, y una segunda parte con ejercicios para poner 
+  el práctica lo aprendido en dicha lección.
+- Si el usuario lo pide, puede generar ejercicios extra para repasar mejor los conceptos de la lección indicada.
+- Adapta el contenido al entorno del perfil (§5.5).
 - Los ejercicios de código incluyen tests automáticos que el teacher ha ejecutado
   contra la solución de referencia; los labs incluyen criterios de éxito verificables.
 - Si la investigación no cubre algo necesario, no lo improvisa: lo devuelve al leader
@@ -105,7 +111,7 @@ verificables; nada se inventa.
 
 ### 4.4 reviewer
 
-- Corrige, en cualquier momento y orden: test diagnóstico, ejercicios y test de repaso
+- Corrige, en cualquier momento y orden: ejercicios y test de repaso
   de cualquier lección, ejercicios de refuerzo, y proyecto o examen final.
 - Ejecuta los tests de los ejercicios de código, valida los labs contra sus criterios
   y evalúa las respuestas abiertas con una **rúbrica explícita** (la de la clave).
@@ -123,11 +129,12 @@ verificables; nada se inventa.
 | `progress/history.md` | leader (append-only, en nombre de cualquier agente) | todos |
 | `.gitignore` (rutas de cada curso) | leader | todos |
 | `topics/<slug>/research/` | researcher | teacher, reviewer, leader |
-| `topics/<slug>/README.md`, lecciones, ejercicios, quiz, `final/` (enunciados), `diagnostic/test.md`, `.keys/` | teacher | todos |
-| `topics/<slug>/**/answers/`, `diagnostic/answers.md` | usuario (o leader transcribiendo); el teacher solo crea la copia vacía de cada test (§10.4) | reviewer |
+| `topics/<slug>/README.md`, índice, lecciones, ejercicios, quiz, `final/` (enunciados), `.keys/` | teacher | todos |
+| `topics/<slug>/index.md`, índice de las lecciones | teacher | todos |
+| `topics/<slug>/**/answers/` | usuario (o leader transcribiendo); el teacher solo crea la copia vacía de cada test y el código inicial de cada ejercicio (§10.4) | reviewer |
 | `progress/<slug>/` | reviewer | leader, teacher |
 
-## 5. Metodología: cursos por días
+## 5. Metodología: cursos por lecciones
 
 Inspiración estructural (no de contenido):
 [30-Days-Of-Python](https://github.com/Asabeneh/30-Days-Of-Python) — una carpeta por
@@ -135,10 +142,9 @@ lección, índice general en tabla, navegación entre lecciones y ejercicios por
 
 ### 5.1 Modalidades
 
-- **7, 15 o 30 días**, elegida por el usuario en el alta.
-- La modalidad fija el **número de lecciones**: un curso de 15 días tiene 15 lecciones.
-  No son días de calendario; el usuario avanza a su ritmo.
-- Cada lección cubre un concepto o varios relacionados: en 7 días se agrupan más
+- **7, 15 o 30 lecciones**, elegida por el usuario en el alta.
+- La modalidad fija el **número de lecciones**.
+- Cada lección cubre un concepto o varios relacionados: en 7 lecciones se agrupan más y se profundizan menos
   conceptos por lección que en 30.
 - Sin bloqueos: lecciones en cualquier orden, se pueden saltar o repetir.
 
@@ -162,7 +168,7 @@ Plantilla: `templates/lesson.md`.
 - Lo decide el leader en el alta y registra la justificación en `status_topics.md` y
   en `history.md`.
 
-### 5.4 Adaptación al diagnóstico
+### 5.4 Adaptación de la dificultad del curso
 
 - Nivel alto → menos espacio a fundamentos, más a temas avanzados. Nivel bajo → al
   revés. **El número de lecciones no cambia.**
@@ -213,23 +219,19 @@ registra en `history.md` y en el propio perfil.
 
 | Paso | Agente | Entrada | Salida | El leader verifica antes de avanzar |
 |---|---|---|---|---|
-| 1. Alta | leader | tema del usuario | sección en `status_topics.md` (estado `diagnóstico`) y rutas del curso en `.gitignore` | slug único; rutas ignoradas por Git (regla 9); modalidad elegida por el usuario; cierre y justificación escritos |
-| 2a. Mapa preliminar | researcher | tema, modalidad | `research/00_mapa.md` + `research/sources.md` | toda afirmación con `[S<n>]` o `[NO VERIFICADO]` |
-| 2b. Test diagnóstico | teacher → usuario → reviewer | mapa preliminar | `diagnostic/test.md`, respuestas, `progress/<slug>/diagnostic.md` | 8–15 preguntas basadas solo en el mapa; corrección con nivel resultante |
-| 3. Investigación completa | researcher | tema, modalidad, diagnóstico | `research/NN_<area>.md` + `sources.md` | cobertura de §4.2; fuentes primarias; versiones indicadas; ninguna afirmación sin fuente |
-| 4. Generación del curso | teacher | investigación, diagnóstico, perfil | `README.md`, todas las lecciones, `.keys/`, `final/` | nº de lecciones = modalidad; estructura §5.2 completa; citas `[S<n>]` válidas; tests ejecutados contra la solución de referencia |
+| 1. Alta | leader | tema del usuario | sección en `status_topics.md` y rutas del curso en `.gitignore` | slug único; rutas ignoradas por Git (regla 9); modalidad elegida por el usuario; cierre y justificación escritos |
+| 2. Mapa preliminar | researcher | tema, modalidad | `research/00_mapa.md` + `research/sources.md` | toda afirmación con `[S<n>]` o `[NO VERIFICADO]` |
+| 3. Investigación completa | researcher | tema, modalidad | `research/NN_<area>.md` + `sources.md` | cobertura de §4.2; fuentes primarias; versiones indicadas; ninguna afirmación sin fuente |
+| 4a. Generación del índice | teacher | investigación, perfil | `index.md` | nº de lecciones = modalidad; estructura §5.2 completa |
+| 4b. Generación del curso | teacher | investigación, perfil | `README.md`, todas las lecciones, `.keys/`, `final/` | nº de lecciones = modalidad; estructura §5.2 completa; citas `[S<n>]` válidas; tests ejecutados contra la solución de referencia |
 | 5. Recorrido libre | usuario + reviewer | respuestas en `answers/` | `progress/<slug>/lessons/NN_<concepto>.md` | nota según §6; conceptos débiles actualizados |
 | 6. Cierre | usuario + reviewer | `final/answers/` | `progress/<slug>/final.md` | rúbrica aplicada; estado `completado` si aprueba |
-
-El mapa preliminar (2a) existe para que el diagnóstico, que va antes de la
-investigación completa, tampoco se invente: es una investigación ligera del temario y
-los fundamentos, con fuentes, que la investigación completa amplía.
 
 Si una verificación falla, el leader devuelve el trabajo al mismo agente indicando qué
 falta; no lo pasa al siguiente. Tras cada paso: actualiza `status_topics.md` y añade
 una entrada a `history.md`.
 
-**Estados de un curso**: `diagnóstico` → `investigando` → `generando` → `en curso` →
+**Estados de un curso**: `investigando` → `generando` → `en curso` →
 `final` → `completado`. `pausado` puede aplicarse en cualquier estado; al pausar se
 guarda el estado previo para reanudar en él.
 
@@ -264,14 +266,12 @@ templates/                     # plantillas versionadas (formatos canónicos)
 topics/                        # contenido de los cursos (local, no versionado)
   status_topics.md             # estado de todos los cursos (solo leader)
   <slug>/
-    README.md                  # índice del curso en tabla
+    README.md                  # breve explicación del curso
+    index.md                   # índice del curso en tabla
     research/
       sources.md               # bibliografía S1..Sn
-      00_mapa.md               # mapa preliminar (paso 2a)
+      00_mapa.md               # mapa preliminar (paso 2)
       NN_<area>.md             # investigación por áreas
-    diagnostic/
-      test.md                  # test diagnóstico
-      answers.md               # respuestas del usuario
     NN_<concepto>/
       NN_<concepto>.md         # teoría
       quiz.md                  # test de repaso
@@ -286,14 +286,12 @@ topics/                        # contenido de los cursos (local, no versionado)
       README.md                # enunciado del proyecto o examen
       answers/
     .keys/                     # claves y soluciones de referencia (teacher → reviewer)
-      diagnostic.md
       NN_<concepto>/{quiz.md, nivel_1.md, nivel_2/, nivel_3/, refuerzo_NN/}
       final/
 progress/                      # progreso del usuario (local, no versionado)
   profile.md
   history.md                   # registro global append-only
   <slug>/
-    diagnostic.md              # corrección y nivel del diagnóstico
     lessons/NN_<concepto>.md   # correcciones por lección (todos los intentos)
     weak_concepts.md           # conceptos débiles vigentes
     final.md                   # evaluación del cierre
@@ -355,18 +353,19 @@ errores comunes, estado actual.
 - Lección: `templates/lesson.md`. Índice del curso: `templates/course_README.md`.
 - Las citas `[S<n>]` de las lecciones enlazan a `../research/sources.md`.
 - Ejercicio de código (nivel 2/3): `README.md` con enunciado, objetivos, código
-  inicial, comando exacto para ejecutar los tests **contra `answers/nivel_N/`** y
+  inicial, que el teacher copia también a `answers/nivel_N/` para que el usuario
+  trabaje ahí, comando exacto para ejecutar los tests **contra `answers/nivel_N/`** y
   requisitos de entorno.
 - Lab: `README.md` con pasos, entorno requerido y **criterios de éxito verificables**
   (comandos y salida esperada). Si no encaja en el entorno del perfil:
   `⏳ Pendiente de entorno — necesita: … — coste: sí/no/estimado` y, si existe, la
   alternativa local.
-- **Formato de todos los tests** (diagnóstico, `quiz.md` y examen final tipo test):
+- **Formato de todos los tests** (`quiz.md` y examen final tipo test):
   preguntas numeradas; cada opción como casilla `- [ ] a) …` (`a)`–`d)`, una
   correcta) más una última opción `- [ ] No lo sé`; sin soluciones en el fichero.
   `quiz.md` tiene 5–10 preguntas.
 - **Respuestas de un test**: el teacher crea junto al enunciado una copia con todas
-  las casillas vacías (`answers/quiz.md`, `diagnostic/answers.md`…) y el usuario marca
+  las casillas vacías (`answers/quiz.md`,…) y el usuario marca
   `[X]` en una opción por pregunta, sin tocar el enunciado. Varias marcas, ninguna o
   "No lo sé" cuentan como fallo. Si el usuario responde en el chat (`1: b`), el leader
   marca las casillas en la copia.
@@ -391,7 +390,7 @@ Cada corrección se **añade** como un nuevo intento:
 - Ejercicios: Z % · Test: Z % · Nota lección: Z % · Estado: sin empezar | en progreso | completada | dominada | refuerzo recomendado
 ```
 
-`diagnostic.md` y `final.md` siguen el mismo formato. `weak_concepts.md` lista los
+`final.md` siguen el mismo formato. `weak_concepts.md` lista los
 conceptos débiles vigentes con lección de origen y fecha; se tachan cuando se superan.
 
 ### 10.7 Estado y registro

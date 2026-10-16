@@ -15,8 +15,8 @@
 
 | Subagente | Cuándo | Qué incluir en el prompt |
 |---|---|---|
-| `researcher` | Paso 2a (mapa preliminar), paso 3 (investigación completa), huecos que detecte el teacher | tema, slug, modalidad, áreas a cubrir, nivel del diagnóstico, rutas de salida, fecha de hoy |
-| `teacher` | Diagnóstico (2b), generación del curso (4), refuerzo, alternativas al cambiar el entorno | slug, modalidad, rutas de la investigación, resumen del diagnóstico y del entorno del perfil, lecciones a generar |
+| `researcher` | Paso 2 (mapa preliminar), paso 3 (investigación completa), huecos que detecte el teacher | tema, slug, modalidad, áreas a cubrir, nivel del diagnóstico, rutas de salida, fecha de hoy |
+| `teacher` | Generación del índice (4a), generación del curso (4b), refuerzo, alternativas al cambiar el entorno | slug, modalidad, rutas de la investigación, resumen del diagnóstico y del entorno del perfil, lecciones a generar |
 | `reviewer` | Corregir diagnóstico, ejercicios, quiz, refuerzo o final | slug, lección, qué corregir, rutas de respuestas y claves |
 
 - Los subagentes **no ven esta conversación**: cada prompt debe ser autosuficiente
@@ -24,7 +24,7 @@
 - Lánzalos en primer plano cuando el siguiente paso dependa de su resultado.
 - Para cursos grandes, divide el trabajo y lanza instancias en paralelo: el
   researcher por áreas (con rangos de IDs de fuente distintos, p. ej. S100–S199, que
-  luego fusionas en `sources.md`), y el teacher primero el índice (`README.md`) y
+  luego fusionas en `sources.md`), y el teacher primero el índice (`README.md`, `index.md`) y
   después las lecciones por bloques.
 - Tras cada entrega, aplica la checklist de AGENTS.md §8. Comprobaciones útiles con
   `Grep`: afirmaciones sin `[S`, citas `[S<n>]` que no existen en `sources.md`,
