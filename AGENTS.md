@@ -101,6 +101,11 @@ verificables; nada se inventa.
 - Escribe toda la investigación en Markdown en `topics/<slug>/research/`
   (`00_mapa.md`, `NN_<area>.md` y `sources.md`, §10.3) para que el teacher la
   convierta en el índice y, después, en lecciones.
+- **La investigación se numera por lección** (§10.3): `00_mapa.md` propone la
+  agrupación en tantas lecciones como la modalidad, y cada fichero `NN_<area>.md`
+  corresponde a la lección `NN`. Si el área de una lección es demasiado grande, se
+  divide en subficheros `NN.M_<area>.md` (`03.1_…`, `03.2_…`), nunca ocupando el
+  número de la lección siguiente.
 - Solo investiga: no escribe índice, lecciones, ejercicios ni claves.
 
 ### 4.3 teacher
@@ -240,8 +245,8 @@ registra en `history.md` y en el propio perfil.
 |---|---|---|---|---|
 | 1. Alta | leader | tema del usuario | sección en `status_topics.md` y rutas del curso en `.gitignore` | slug único; rutas ignoradas por Git (regla 9); modalidad elegida por el usuario; cierre y justificación escritos |
 | 2. Mapa preliminar | researcher | tema, modalidad | `research/00_mapa.md` + `research/sources.md` | toda afirmación con `[S<n>]` o `[NO VERIFICADO]` |
-| 3. Investigación completa | researcher | tema, modalidad | `research/NN_<area>.md` + `sources.md` | cobertura de §4.2; fuentes primarias; versiones indicadas; ninguna afirmación sin fuente |
-| 4a. Generación del índice | teacher | investigación, perfil | `index.md`, `README.md` | nº de filas del índice = modalidad; conceptos con `[S<n>]`; **no existe ninguna carpeta `NN_*`, `.keys/` ni `final/`**. Fin del alta: el leader presenta el índice y espera |
+| 3. Investigación completa | researcher | tema, modalidad | `research/NN_<area>.md` (o `NN.M_<area>.md`) + `sources.md` | numeración por lección (§10.3): exactamente N grupos `NN` = modalidad; cobertura de §4.2; fuentes primarias; versiones indicadas; ninguna afirmación sin fuente |
+| 4a. Generación del índice | teacher | investigación, perfil | `index.md`, `README.md` | nº de filas del índice = modalidad; la lección `NN` se basa en `research/NN_*` / `NN.M_*`; conceptos con `[S<n>]`; **no existe ninguna carpeta `NN_*`, `.keys/` ni `final/`**. Fin del alta: el leader presenta el índice y espera |
 | 4b. Generación de una lección (bajo demanda, repetible) | teacher | petición del usuario ("siguiente lección" o una concreta), investigación, perfil | `NN_<concepto>/` completa, `.keys/NN_<concepto>/`, fila marcada en `index.md` | solo se ha creado la lección pedida; estructura §5.2 completa; citas `[S<n>]` válidas; tests ejecutados contra la solución de referencia |
 | 5. Recorrido libre | usuario + reviewer | respuestas en `answers/` | `progress/<slug>/lessons/NN_<concepto>.md` | nota según §6; conceptos débiles actualizados |
 | 6. Cierre | teacher (enunciado, al pedirlo el usuario) + usuario + reviewer | `final/answers/` | `final/`, `.keys/final/`, `progress/<slug>/final.md` | final generado solo a petición; rúbrica aplicada; estado `completado` si aprueba |
@@ -294,7 +299,8 @@ topics/                        # contenido de los cursos (local, no versionado)
     research/
       sources.md               # bibliografía S1..Sn
       00_mapa.md               # mapa preliminar (paso 2)
-      NN_<area>.md             # investigación por áreas
+      NN_<area>.md             # investigación de la lección NN
+      NN.M_<area>.md           # subdivisión si el área de la lección NN es grande
     NN_<concepto>/             # se crea solo al pedir esa lección (paso 4b)
       NN_<concepto>.md         # teoría
       quiz.md                  # test de repaso
@@ -351,7 +357,19 @@ progress/                      # progreso del usuario (local, no versionado)
 - **[S1]** Título — URL — tipo: oficial | RFC | especificación | paper | secundaria — versión: X.Y — consultado: AAAA-MM-DD
 ```
 
-`00_mapa.md` y `NN_<area>.md`:
+**Numeración de los ficheros de investigación**
+
+- `00_mapa.md` incluye la propuesta de agrupación en exactamente N lecciones
+  (N = modalidad) y, por cada lección, el fichero o ficheros que la cubren.
+- `NN` es el número de la lección a la que alimenta el fichero (`01`…`N`): hay un
+  grupo `NN` por lección, ni más ni menos.
+- Si el área de una lección es demasiado grande para un fichero, se divide en
+  `NN.M_<area>.md` (`03.1_closures_decoradores.md`, `03.2_context_managers.md`). En
+  ese caso no existe `NN_<area>.md` sin subíndice para esa lección.
+- Nunca se usa el número de otra lección para un subárea: el teacher y el leader
+  emparejan lección `NN` ↔ `research/NN_*` / `NN.M_*`.
+
+`00_mapa.md`, `NN_<area>.md` y `NN.M_<area>.md`:
 
 ```markdown
 # <Área> — <tema> (versión de referencia: X.Y)

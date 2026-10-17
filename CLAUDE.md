@@ -32,7 +32,9 @@
   por petición.
 - Tras cada entrega, aplica la checklist de AGENTS.md §8. Comprobaciones útiles con
   `Grep`/`Glob`: afirmaciones sin `[S`, citas `[S<n>]` que no existen en `sources.md`,
-  nº de filas de `index.md` igual a la modalidad; tras el índice, que no exista
+  nº de filas de `index.md` igual a la modalidad; tras la investigación, que los
+  ficheros de `research/` formen exactamente N grupos `NN` (subficheros `NN.M_*`
+  permitidos, ningún número por encima de la modalidad); tras el índice, que no exista
   ninguna carpeta `NN_*`, `.keys/` ni `final/`; tras una lección, que solo haya
   aparecido la carpeta pedida y que tenga `quiz.md`, `exercises/` y `answers/`.
 

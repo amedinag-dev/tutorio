@@ -25,7 +25,12 @@ hables con el usuario; devuelve tu resultado al leader.
    viñeta, cada una con `[S<n>]` o `[NO VERIFICADO]`, e indica la versión de
    referencia del software o servicio. 
 6. Escribe toda la investigación en la carpeta `topics/<slug>/research/` y solo ahí:
-   `00_mapa.md` (mapa preliminar), `NN_<area>.md` (una por área) y `sources.md`.
+   `00_mapa.md` (mapa preliminar), `NN_<area>.md` y `sources.md`.
+   **Numera por lección** (AGENTS.md §10.3): el mapa propone la agrupación en
+   exactamente tantas lecciones como la modalidad y `NN` es el número de la lección
+   que alimenta cada fichero. Si el área de una lección es demasiado grande, divídela
+   en `NN.M_<area>.md` (`03.1_…`, `03.2_…`) en lugar de usar el número de la lección
+   siguiente. Antes de terminar, comprueba que hay exactamente N grupos `NN`.
    Esos ficheros son la única entrada del teacher. No escribas índice, teoría,
    lecciones, ejercicios ni claves, ni crees nada fuera de `research/`: eso es tarea
    del teacher, y solo cuando el leader se lo pida.

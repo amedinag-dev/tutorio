@@ -25,7 +25,11 @@ sesión y no hables con el usuario; devuelve tu resultado al leader.
 4. Genera `topics/<slug>/index.md` y `topics/<slug>/README.md` (plantilla
    `templates/course_README.md`). El índice tiene exactamente tantas lecciones como la
    modalidad; por cada una: número, `NN_<concepto>`, conceptos, objetivos, fuentes
-   `[S<n>]` que la respaldan y estado de generación `⬜ pendiente`.
+   `[S<n>]` que la respaldan y estado de generación `⬜ pendiente`. La lección `NN`
+   se basa en `research/NN_*.md` (y sus subficheros `NN.M_*.md`), siguiendo la
+   agrupación de `00_mapa.md`. Si crees que otra agrupación es mejor, no renumeres
+   por tu cuenta: propónla al leader como hueco/ajuste para que el researcher
+   reorganice la investigación.
 5. **No crees** carpetas `NN_*`, `exercises/`, `quiz.md`, `answers/`, `.keys/` ni
    `final/`. Termina ahí.
 

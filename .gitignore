@@ -226,3 +226,5 @@ __marimo__/
 # Tutorio: rutas de cada curso (las añade el leader al dar de alta un curso)
 /topics/python-basico/
 /progress/python-basico/
+/topics/python-avanzado/
+/progress/python-avanzado/
