@@ -24,11 +24,12 @@ Copia este bloque por cada curso.
 - **Slug**: `<slug>`
 - **Modalidad**: <7 | 15 | 30> días
 - **Tipo de cierre**: <proyecto | examen> — justificación: <por qué>
-- **Estado**: <diagnóstico | investigando | generando | en curso | pausado | final | completado>
+- **Estado**: <investigando | generando | en curso | pausado | final | completado>
 - **Estado previo** (solo si pausado): <estado>
 - **Inicio**: <AAAA-MM-DD> · **Última actividad**: <AAAA-MM-DD> (informativas)
 
 ### Progreso
+- Generadas: <n>/<total> — siguiente por generar: <NN | —>
 - Completadas: <n>/<total>
 - Dominadas (≥80 %): <n> — lecciones: <…>
 - Refuerzo recomendado: <n> — lecciones: <…>
@@ -47,7 +48,6 @@ Copia este bloque por cada curso.
 - Nota media de ejercicios: —
 - Nota media de tests de repaso: —
 - Refuerzos: 0
-- Diagnóstico: <nivel bajo | medio | alto> (<X %>) — ver `progress/<slug>/diagnostic.md`
 - Final: <pendiente | X % aprobado/suspenso>
 
 ### Conceptos débiles

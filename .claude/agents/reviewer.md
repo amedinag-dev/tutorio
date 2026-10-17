@@ -36,6 +36,5 @@ de sesión y no hables con el usuario; devuelve tu resultado al leader.
 - Nota por apartado y nota de la lección, con estado (completada, dominada, refuerzo
   recomendado).
 - Conceptos débiles y si se recomienda refuerzo.
-- En el diagnóstico: nivel resultante (bajo / medio / alto) y en qué áreas.
 - Ficheros modificados y cualquier incidencia (tests que no se pudieron ejecutar,
   posibles errores en la clave).

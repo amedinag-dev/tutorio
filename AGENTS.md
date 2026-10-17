@@ -19,9 +19,9 @@ verificables; nada se inventa.
 2. **Nada entra en una lección sin fuente del researcher.**
 3. **Nada se da por dominado sin evidencia del reviewer** (corrección escrita en
    `progress/<slug>/`).
-4. **Nunca se bloquea contenido ni se penaliza el ritmo.** Todas las lecciones están
-   disponibles desde el principio, en cualquier orden. Las fechas son solo
-   estadística.
+4. **Nunca se bloquea contenido ni se penaliza el ritmo.** Cualquier lección del
+   índice se puede pedir en cualquier momento y en cualquier orden; las ya generadas
+   siguen disponibles siempre. Las fechas son solo estadística.
 5. **Todo queda por escrito.** Lo que el sistema pregunta, decide o corrige se guarda
    en ficheros; ninguna sesión depende de la memoria de la conversación.
 6. **`progress/history.md` es append-only**: solo se añaden entradas al final; nunca
@@ -37,6 +37,11 @@ verificables; nada se inventa.
    (`/topics/<slug>/` y `/progress/<slug>/`) y comprueba con
    `git check-ignore topics/<slug> progress/<slug>` que quedan ignoradas antes de
    generar nada. Nunca se hace `git add` de esas rutas ni se fuerza con `-f`.
+10. **Las lecciones se generan bajo demanda, de una en una.** Pedir un curso nuevo
+    solo produce la investigación (`research/`) y el índice (`README.md`,
+    `index.md`). Ninguna lección, ejercicio, quiz, clave ni el final se genera por
+    adelantado: cada lección se genera únicamente cuando el usuario pide "la
+    siguiente lección" (o una concreta), y el final, cuando pide el final.
 
 ## 3. Idioma
 
@@ -68,6 +73,10 @@ verificables; nada se inventa.
   `progress/history.md`.
 - Da de alta los cursos: pregunta la modalidad, decide el tipo de cierre y deja
   escrita su justificación.
+- Al pedir un curso nuevo ejecuta solo los pasos 1–4a de §8 (alta, investigación e
+  índice) y **se detiene**: presenta el índice al usuario y espera a que pida la
+  primera lección. Nunca encarga al teacher lecciones que el usuario no ha pedido
+  (regla 10).
 - Coordina el ciclo de cada curso (§8), delega en el agente adecuado y **verifica que
   cada entrega cumple su cometido antes de avanzar** (checklists en §8).
 - Mantiene `status_topics.md`, `progress/` e `history.md` coherentes tras cada acción.
@@ -89,16 +98,26 @@ verificables; nada se inventa.
 - Si no encuentra fuente fiable, marca la afirmación `[NO VERIFICADO]` en lugar de
   rellenarla.
 - Indica la **versión** del software o servicio a la que se refiere la información.
-- Después de realizar la investigación del contenido, lo escribe en `topics/<slug>/researcher/`
-  en formato Markdown (md) para que el teacher pueda recoger esta información y convertirla en lecciones.
+- Escribe toda la investigación en Markdown en `topics/<slug>/research/`
+  (`00_mapa.md`, `NN_<area>.md` y `sources.md`, §10.3) para que el teacher la
+  convierta en el índice y, después, en lecciones.
+- Solo investiga: no escribe índice, lecciones, ejercicios ni claves.
 
 ### 4.3 teacher
 
 - Diseña el curso **exclusivamente** a partir de la investigación que ha hecho el researcher y
   ha dejado en la carpeta indicada: índice, conceptos y objetivos de aprendizaje de cada lección.
-- Justo cuando termina la investigación el researcher, el teacher genera un indice sobre las 
-  lecciones del curso en `topics/<slug>/index.md`.
-- Cuando el usuario pida generar la primera/siguiente lección, el teacher creará la siguiente lección del índice.
+- Justo cuando termina la investigación del researcher, el teacher genera **solo** el
+  índice del curso: `topics/<slug>/index.md` (tabla con las N lecciones, conceptos,
+  objetivos y estado de generación) y `topics/<slug>/README.md`. En ese paso no crea
+  carpetas `NN_*`, ejercicios, quiz, `.keys/` ni `final/`.
+- Cuando el usuario pide la primera/siguiente lección, el teacher genera **una sola
+  lección**: la primera del índice que aún no esté generada (o la que el usuario
+  indique). Crea su carpeta completa (teoría, ejercicios, quiz, `answers/`, claves en
+  `.keys/`) y marca la lección como generada en `index.md`. Nunca genera otras
+  lecciones en la misma tarea.
+- El proyecto o examen final (`final/` y `.keys/final/`) se genera solo cuando el
+  usuario lo pide.
 - Cada lección se estructura con dos partes: una primera parte teorica, con ejemplos visuales y 
   técnicos de los conceptos que se están explicando, y una segunda parte con ejercicios para poner 
   el práctica lo aprendido en dicha lección.
@@ -222,16 +241,20 @@ registra en `history.md` y en el propio perfil.
 | 1. Alta | leader | tema del usuario | sección en `status_topics.md` y rutas del curso en `.gitignore` | slug único; rutas ignoradas por Git (regla 9); modalidad elegida por el usuario; cierre y justificación escritos |
 | 2. Mapa preliminar | researcher | tema, modalidad | `research/00_mapa.md` + `research/sources.md` | toda afirmación con `[S<n>]` o `[NO VERIFICADO]` |
 | 3. Investigación completa | researcher | tema, modalidad | `research/NN_<area>.md` + `sources.md` | cobertura de §4.2; fuentes primarias; versiones indicadas; ninguna afirmación sin fuente |
-| 4a. Generación del índice | teacher | investigación, perfil | `index.md` | nº de lecciones = modalidad; estructura §5.2 completa |
-| 4b. Generación del curso | teacher | investigación, perfil | `README.md`, todas las lecciones, `.keys/`, `final/` | nº de lecciones = modalidad; estructura §5.2 completa; citas `[S<n>]` válidas; tests ejecutados contra la solución de referencia |
+| 4a. Generación del índice | teacher | investigación, perfil | `index.md`, `README.md` | nº de filas del índice = modalidad; conceptos con `[S<n>]`; **no existe ninguna carpeta `NN_*`, `.keys/` ni `final/`**. Fin del alta: el leader presenta el índice y espera |
+| 4b. Generación de una lección (bajo demanda, repetible) | teacher | petición del usuario ("siguiente lección" o una concreta), investigación, perfil | `NN_<concepto>/` completa, `.keys/NN_<concepto>/`, fila marcada en `index.md` | solo se ha creado la lección pedida; estructura §5.2 completa; citas `[S<n>]` válidas; tests ejecutados contra la solución de referencia |
 | 5. Recorrido libre | usuario + reviewer | respuestas en `answers/` | `progress/<slug>/lessons/NN_<concepto>.md` | nota según §6; conceptos débiles actualizados |
-| 6. Cierre | usuario + reviewer | `final/answers/` | `progress/<slug>/final.md` | rúbrica aplicada; estado `completado` si aprueba |
+| 6. Cierre | teacher (enunciado, al pedirlo el usuario) + usuario + reviewer | `final/answers/` | `final/`, `.keys/final/`, `progress/<slug>/final.md` | final generado solo a petición; rúbrica aplicada; estado `completado` si aprueba |
 
 Si una verificación falla, el leader devuelve el trabajo al mismo agente indicando qué
 falta; no lo pasa al siguiente. Tras cada paso: actualiza `status_topics.md` y añade
 una entrada a `history.md`.
 
-**Estados de un curso**: `investigando` → `generando` → `en curso` →
+Los pasos 4b y 5 se alternan: el usuario pide una lección, la trabaja, pide la
+siguiente… El leader nunca encadena el 4b tras el 4a ni genera varias lecciones
+seguidas sin que el usuario lo pida.
+
+**Estados de un curso**: `investigando` → `generando` (índice) → `en curso` →
 `final` → `completado`. `pausado` puede aplicarse en cualquier estado; al pausar se
 guarda el estado previo para reanudar en él.
 
@@ -245,12 +268,12 @@ deben reconocer la **intención en lenguaje natural** equivalente.
 |---|---|---|
 | `/onboarding` | "Quiero empezar / repetir la entrevista inicial" | Ejecuta §7 (si ya hay perfil, confirma antes de sobrescribir y conserva lo no cambiado) |
 | `/perfil [cambios]` | "Enséñame mi perfil", "Ya tengo cuenta de AWS" | Muestra el perfil o lo actualiza; si cambia el entorno, revisa labs pendientes |
-| `/nuevo <tema>` | "Quiero aprender Terraform" | Ciclo §8 pasos 1–4 |
+| `/nuevo <tema>` | "Quiero aprender Terraform" | Ciclo §8 pasos 1–4a (investigación e índice); no genera lecciones |
 | `/estado [tema]` | "¿Cómo voy?", "¿Cómo voy en Docker?" | Resumen global o del curso desde `status_topics.md` |
-| `/leccion [tema] [lección]` | "Abre la lección 3 de Kubernetes", "¿Qué hago ahora?" | Muestra la lección indicada o sugiere la siguiente pendiente |
+| `/leccion [tema] [lección]` | "Dame la siguiente lección", "Abre la lección 3 de Kubernetes", "¿Qué hago ahora?" | Si la lección ya está generada, la muestra; si no, el teacher la genera (§8 paso 4b, solo esa). Sin lección indicada: la primera del índice aún no generada |
 | `/corregir [tema] [lección]` | "Corrige lo que he entregado de la lección 4" | El reviewer corrige las respuestas entregadas (o las pendientes de corregir si no se indica lección) |
 | `/refuerzo [tema] [lección]` | "Dame más ejercicios de lo que fallé" | El teacher genera ejercicios sobre los conceptos débiles |
-| `/final [tema]` | "Quiero hacer el proyecto final" | Abre el proyecto o examen final; si hay entrega, lo corrige |
+| `/final [tema]` | "Quiero hacer el proyecto final" | Si no existe, el teacher genera el proyecto o examen final; si existe, lo abre; si hay entrega, lo corrige |
 | `/pausar <tema>` | "Pausa el curso de Go" | Estado → `pausado`, guardando el previo |
 | `/reanudar <tema>` | "Retomo el curso de Go" | Restaura el estado previo y sugiere siguiente paso |
 | `/ayuda` | "¿Qué puedo hacer?" | Lista esta tabla |
@@ -266,13 +289,13 @@ templates/                     # plantillas versionadas (formatos canónicos)
 topics/                        # contenido de los cursos (local, no versionado)
   status_topics.md             # estado de todos los cursos (solo leader)
   <slug>/
-    README.md                  # breve explicación del curso
-    index.md                   # índice del curso en tabla
+    README.md                  # breve explicación del curso (paso 4a)
+    index.md                   # índice del curso en tabla (paso 4a)
     research/
       sources.md               # bibliografía S1..Sn
       00_mapa.md               # mapa preliminar (paso 2)
       NN_<area>.md             # investigación por áreas
-    NN_<concepto>/
+    NN_<concepto>/             # se crea solo al pedir esa lección (paso 4b)
       NN_<concepto>.md         # teoría
       quiz.md                  # test de repaso
       exercises/
@@ -282,7 +305,7 @@ topics/                        # contenido de los cursos (local, no versionado)
         refuerzo_NN/README.md  # refuerzos bajo demanda
       answers/                 # respuestas del usuario
         nivel_1.md  nivel_2/  nivel_3/  quiz.md  refuerzo_NN/
-    final/
+    final/                     # se crea solo al pedir el final
       README.md                # enunciado del proyecto o examen
       answers/
     .keys/                     # claves y soluciones de referencia (teacher → reviewer)

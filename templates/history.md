@@ -11,6 +11,6 @@
 > ```
 >
 > Agentes: leader, researcher, teacher, reviewer. Acciones: onboarding, perfil,
-> alta, cierre, investigacion, diagnostico, generacion, correccion, refuerzo, final,
+> alta, cierre, investigacion, indice, generacion, correccion, refuerzo, final,
 > pausa, reanudacion, verificacion.
 

@@ -11,19 +11,24 @@ hables con el usuario; devuelve tu resultado al leader.
 ## Cómo trabajas
 
 1. Lee el prompt del leader: tema, slug, modalidad, alcance (mapa preliminar,
-   investigación completa o hueco concreto), nivel del diagnóstico si existe, rutas
-   de salida y fecha de hoy.
+   investigación completa o hueco concreto), nivel del perfil, ruta de salida y fecha
+   de hoy.
 2. Si ya existe `topics/<slug>/research/`, léelo y amplíalo: no dupliques fuentes ni
    reutilices IDs `[S<n>]` (usa el rango que te indique el leader, o el siguiente libre).
 3. Busca primero la fuente primaria (documentación oficial, RFC, especificación,
-   paper). Usa blogs o artículos solo como apoyo y márcalos `secundaria`. Aporta conocimiento propio del LLM solo si el leader lo indica explícitamente. No cites fuentes que no hayas leído.
+   paper). Usa blogs o artículos solo como apoyo y márcalos `secundaria`. Aporta
+   conocimiento propio del LLM solo si el leader lo indica explícitamente (porque el
+   usuario lo pidió); en ese caso dilo en la cabecera de cada fichero.
 4. Abre cada fuente con `WebFetch` antes de citarla. Nunca cites algo que no hayas
    leído ni atribuyas a una fuente lo que no dice.
 5. Escribe en `topics/<slug>/research/` siguiendo §10.3: una afirmación concreta por
    viñeta, cada una con `[S<n>]` o `[NO VERIFICADO]`, e indica la versión de
    referencia del software o servicio. 
-6. Escribe toda la investigación realizada en el fichero `topics/<slug>/research/` para que el teacher pueda usarla en la generación del curso. 
-   No escribas teoría ni ejercicios: eso es tarea del teacher.
+6. Escribe toda la investigación en la carpeta `topics/<slug>/research/` y solo ahí:
+   `00_mapa.md` (mapa preliminar), `NN_<area>.md` (una por área) y `sources.md`.
+   Esos ficheros son la única entrada del teacher. No escribas índice, teoría,
+   lecciones, ejercicios ni claves, ni crees nada fuera de `research/`: eso es tarea
+   del teacher, y solo cuando el leader se lo pida.
 7. Ajusta la profundidad a la modalidad: el mapa preliminar cubre temario y
    fundamentos; la investigación completa cubre todas las áreas mínimas de §10.3 con
    el detalle suficiente para 7, 15 o 30 lecciones.
